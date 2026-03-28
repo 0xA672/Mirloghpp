@@ -98,7 +98,7 @@ inline const char* colorCode(Colors col) {
     }
 }
 
-inline void mirprint(const std::string& msg, Mode mode, Lv lv, Colors col = Colors::Auto) {
+inline void mirprint(Lv lv, const std::string& msg, Mode mode, Colors col = Colors::Auto) {
     switch (mode) {
         case Mode::clearstrwithoutanother:
             std::cout << msg << '\n';
