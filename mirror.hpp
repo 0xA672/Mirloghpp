@@ -57,14 +57,14 @@ std::string utcnow(){
     return std::string(mir) + " UTC";
 }
 
-enum Mode {
+enum class Mode {
   clearstrwithoutanother,
   timestrclear,
   nocolor,
   coloredstr,
 };
 
-enum Lv {
+enum class Lv {
   Info,
   Access,
   Warn,
@@ -72,7 +72,7 @@ enum Lv {
   Panic,
 };
 
-enum Colors {
+enum class Colors {
   green,
   blue,
   red,
@@ -127,12 +127,12 @@ inline void mirprint(Lv lv, const std::string& msg, Mode mode, Colors col = Colo
         case Mode::coloredstr: {
             if (col == Colors::Auto) {
                 switch (lv) {
-                    case Lv::Info:   col = Colors::white;  break;
-                    case Lv::Access: col = Colors::green;  break;
-                    case Lv::Warn:   col = Colors::yellow; break;
-                    case Lv::Error:  col = Colors::red;    break;
-                    case Lv::Panic:  col = Colors::red;    break;
-                    default:         col = Colors::white;  break;
+                    case Lv::Info:   col = static_cast<Colors>(Colors::white);  break;
+                    case Lv::Access: col = static_cast<Colors>(Colors::green);  break;
+                    case Lv::Warn:   col = static_cast<Colors>(Colors::yellow); break;
+                    case Lv::Error:  col = static_cast<Colors>(Colors::red);    break;
+                    case Lv::Panic:  col = static_cast<Colors>(Colors::red);    break;
+                    default:         col = static_cast<Colors>(Colors::white);  break;
                 }
             }
             std::cout << colorCode(col) << utcnow() << ' ' << MatchLv(lv) << ' ' << msg << "\033[0m\n";
