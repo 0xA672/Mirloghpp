@@ -31,6 +31,17 @@ inline void VTMode(){
 
 
 namespace mirror {
+#ifdef _WIN32
+inline void vtMODE(){
+    static bool ok = []() {
+        VTMode();
+        return true;
+    }();
+    (void)ok;
+} 
+#else 
+inline void vtMODE(){}
+#endif   
 
 std::string utcnow(){
     std::chrono::system_clock::time_point now = std::chrono::system_clock::now();
@@ -70,7 +81,7 @@ enum Colors {
   Auto,
 };
 
-inline std::string MatchLv(Lv lv){
+inline const char* MatchLv(Lv lv){
    switch(lv){
    case Lv::Info:
    return "[INFO]";
@@ -99,6 +110,7 @@ inline const char* colorCode(Colors col) {
 }
 
 inline void mirprint(Lv lv, const std::string& msg, Mode mode, Colors col = Colors::Auto) {
+    vtMODE();
     switch (mode) {
         case Mode::clearstrwithoutanother:
             std::cout << msg << '\n';
