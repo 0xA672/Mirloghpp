@@ -41,7 +41,7 @@ inline void vtMODE(){
 } 
 #else 
 inline void vtMODE(){}
-#endif   
+#endif    
 
 std::string utcnow(){
     std::chrono::system_clock::time_point now = std::chrono::system_clock::now();
