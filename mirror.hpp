@@ -173,31 +173,31 @@ class ColoredString {
 public:
     explicit ColoredString(std::string s) : str_(std::move(s)) {}
 
-    ColoredString& black()   { fg_ = Colors::black; return *this; }
-    ColoredString& red()     { fg_ = Colors::red;   return *this; }
-    ColoredString& green()   { fg_ = Colors::green; return *this; }
-    ColoredString& yellow()  { fg_ = Colors::yellow;return *this; }
-    ColoredString& blue()    { fg_ = Colors::blue;  return *this; }
-    ColoredString& magenta() { fg_ = Colors::magenta; return *this; }
-    ColoredString& cyan()    { fg_ = Colors::cyan;  return *this; }
-    ColoredString& white()   { fg_ = Colors::white; return *this; }
+    ColoredString& black()   { fg_ = Colors::black;  return *this; }
+    ColoredString& red()     { fg_ = Colors::red;    return *this; }
+    ColoredString& green()   { fg_ = Colors::green;  return *this; }
+    ColoredString& yellow()  { fg_ = Colors::yellow; return *this; }
+    ColoredString& blue()    { fg_ = Colors::blue;   return *this; }
+    ColoredString& magenta() { fg_ = Colors::magenta;return *this; }
+    ColoredString& cyan()    { fg_ = Colors::cyan;   return *this; }
+    ColoredString& white()   { fg_ = Colors::white;  return *this; }
 
-    ColoredString& on_black()   { bg_ = Colors::black; return *this; }
-    ColoredString& on_red()     { bg_ = Colors::red;   return *this; }
-    ColoredString& on_green()   { bg_ = Colors::green; return *this; }
-    ColoredString& on_yellow()  { bg_ = Colors::yellow;return *this; }
-    ColoredString& on_blue()    { bg_ = Colors::blue;  return *this; }
-    ColoredString& on_magenta() { bg_ = Colors::magenta; return *this; }
-    ColoredString& on_cyan()    { bg_ = Colors::cyan;  return *this; }
-    ColoredString& on_white()   { bg_ = Colors::white; return *this; }
+    ColoredString& on_black()   { bg_ = Colors::black;  return *this; }
+    ColoredString& on_red()     { bg_ = Colors::red;    return *this; }
+    ColoredString& on_green()   { bg_ = Colors::green;  return *this; }
+    ColoredString& on_yellow()  { bg_ = Colors::yellow; return *this; }
+    ColoredString& on_blue()    { bg_ = Colors::blue;   return *this; }
+    ColoredString& on_magenta() { bg_ = Colors::magenta;return *this; }
+    ColoredString& on_cyan()    { bg_ = Colors::cyan;   return *this; }
+    ColoredString& on_white()   { bg_ = Colors::white;  return *this; }
 
-    ColoredString& bold()          { style_ = style_ | Style::Bold; return *this; }
-    ColoredString& dim()           { style_ = style_ | Style::Dim; return *this; }
-    ColoredString& italic()        { style_ = style_ | Style::Italic; return *this; }
-    ColoredString& underline()     { style_ = style_ | Style::Underline; return *this; }
-    ColoredString& blink()         { style_ = style_ | Style::Blink; return *this; }
-    ColoredString& reverse()       { style_ = style_ | Style::Reverse; return *this; }
-    ColoredString& hidden()        { style_ = style_ | Style::Hidden; return *this; }
+    ColoredString& bold()          { style_ = style_ | Style::Bold;          return *this; }
+    ColoredString& dim()           { style_ = style_ | Style::Dim;           return *this; }
+    ColoredString& italic()        { style_ = style_ | Style::Italic;        return *this; }
+    ColoredString& underline()     { style_ = style_ | Style::Underline;     return *this; }
+    ColoredString& blink()         { style_ = style_ | Style::Blink;         return *this; }
+    ColoredString& reverse()       { style_ = style_ | Style::Reverse;       return *this; }
+    ColoredString& hidden()        { style_ = style_ | Style::Hidden;        return *this; }
     ColoredString& strikethrough() { style_ = style_ | Style::Strikethrough; return *this; }
 
     ColoredString& clear_style() { style_ = Style::None; return *this; }
@@ -209,23 +209,25 @@ public:
         bool first = true;
         
         if (cs.fg_ != Colors::Auto) {
-            seq += (first ? "" : ";") + std::to_string(30 + static_cast<int>(cs.fg_));
+            seq += first ? std::to_string(30 + static_cast<int>(cs.fg_)) 
+                         : ";" + std::to_string(30 + static_cast<int>(cs.fg_));
             first = false;
         }
 
         if (cs.bg_ != Colors::Auto) {
-            seq += (first ? "" : ";") + std::to_string(40 + static_cast<int>(cs.bg_));
+            seq += first ? std::to_string(40 + static_cast<int>(cs.bg_)) 
+                         : ";" + std::to_string(40 + static_cast<int>(cs.bg_));
             first = false;
         }
 
-        if (cs.style_ & Style::Bold)      { seq += (first ? "" : ";") + "1"; first = false; }
-        if (cs.style_ & Style::Dim)       { seq += (first ? "" : ";") + "2"; first = false; }
-        if (cs.style_ & Style::Italic)    { seq += (first ? "" : ";") + "3"; first = false; }
-        if (cs.style_ & Style::Underline) { seq += (first ? "" : ";") + "4"; first = false; }
-        if (cs.style_ & Style::Blink)     { seq += (first ? "" : ";") + "5"; first = false; }
-        if (cs.style_ & Style::Reverse)   { seq += (first ? "" : ";") + "7"; first = false; }
-        if (cs.style_ & Style::Hidden)    { seq += (first ? "" : ";") + "8"; first = false; }
-        if (cs.style_ & Style::Strikethrough) { seq += (first ? "" : ";") + "9"; first = false; }
+        if (cs.style_ & Style::Bold)      { seq += first ? "1" : ";1"; first = false; }
+        if (cs.style_ & Style::Dim)       { seq += first ? "2" : ";2"; first = false; }
+        if (cs.style_ & Style::Italic)    { seq += first ? "3" : ";3"; first = false; }
+        if (cs.style_ & Style::Underline) { seq += first ? "4" : ";4"; first = false; }
+        if (cs.style_ & Style::Blink)     { seq += first ? "5" : ";5"; first = false; }
+        if (cs.style_ & Style::Reverse)   { seq += first ? "7" : ";7"; first = false; }
+        if (cs.style_ & Style::Hidden)    { seq += first ? "8" : ";8"; first = false; }
+        if (cs.style_ & Style::Strikethrough) { seq += first ? "9" : ";9"; first = false; }
         
         seq += "m";
         os << seq << cs.str_ << "\033[0m";
