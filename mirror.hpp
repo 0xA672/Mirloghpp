@@ -75,6 +75,7 @@ enum class Lv {
 };
 
 enum class Colors {
+  black,
   green,
   blue,
   red,
