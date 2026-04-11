@@ -8,6 +8,7 @@
 #include <ctime>
 #include <cstdio>
 #include <mutex>
+#include <cstdint>
 
 #define Mirror_Fast()                      \
     do {                                \
